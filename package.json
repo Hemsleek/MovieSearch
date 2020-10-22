@@ -7,12 +7,16 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "node-sass": "^4.14.1",
+    "postcss-cli": "^8.1.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-scripts": "3.4.3"
+    "react-scripts": "3.4.3",
+    "tailwindcss": "^1.9.5"
   },
   "scripts": {
     "start": "react-scripts start",
+    "style:watch": "postcss src/source.scss -o src/index.scss --watch",
+    "style:build": "npx tailwind build src/source.scss -o src/index.scss",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
