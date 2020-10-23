@@ -7,7 +7,8 @@ module.exports = {
   theme: {
     extend: {
       colors:{
-        "kaki":'green'
+        "kaaki":'green',
+        "musi" :'red'
       }
     },
   },
