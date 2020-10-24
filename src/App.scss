@@ -1,7 +1,11 @@
-// @import url('');
+@import url('https://fonts.googleapis.com/css2?family=Vampiro+One&display=swap');
 
 .App{
-  input{
-    
+ 
+  .Nav{
+
+    .brand-logo{
+      font-family: 'Vampiro One', cursive;
+    }
   }
 }

@@ -8,20 +8,20 @@ const Nav = () => {
 
     return (
       
-      <nav className="Nav w-full flex items-center h-12 px-4 bg-gray-600 text-white">
+      <nav className="Nav w-full flex items-center h-16 px-4 bg-gray-600 text-white">
 
-        <span className="brand-logo cursor-pointer text-lg font-bold">MoviesMight</span>
+        <span className="brand-logo cursor-pointer text-2 xl font-bolder">MoviesMight</span>
 
         <input type="search" className="px-2 w-48 py-1 ml-3 rounded outline-none text-black text-opacity-75" />
 
         <span className="spacer flex-grow"></span>
 
         {
-          navbarTabs.map((tab , tabIndex) => <span className="tab ml-3 cursor-pointer" key={`navTab-${tabIndex}`} >{tab}</span>)
+          navbarTabs.map((tab , tabIndex) => <span className="tab ml-3 cursor-pointer hover:text-gray-400" key={`navTab-${tabIndex}`} >{tab}</span>)
         }
 
         <span className="spacer flex-grow"></span>
-        <select defaultValue="Category" className="categories outline-none px-4 py-2 bg-white  text-black text-opacity-75 rounded-md">
+        <select defaultValue="Category" className="categories outline-none px-4 py-2 bg-white  text-black text-opacity-75 rounded">
           
           {
             categories.map((category, categoryIndex) => 
