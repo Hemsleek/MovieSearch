@@ -7,5 +7,9 @@
     .brand-logo{
       font-family: 'Vampiro One', cursive;
     }
+
+    span.tab + span.tab{
+      margin-left:1.2rem;
+    }
   }
 }

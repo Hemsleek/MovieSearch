@@ -1,4 +1,5 @@
-import React from 'react';
+import React , {useState , useEffect} from 'react';
+import Axios from 'axios'
 
 import './App.scss';
 
@@ -8,7 +9,7 @@ const Nav = () => {
 
     return (
       
-      <nav className="Nav w-full flex items-center h-16 px-4 bg-gray-600 text-white">
+      <nav className="Nav w-full flex items-center h-16 px-4 bg-gray-600 text-white shadow-md">
 
         <span className="brand-logo cursor-pointer text-2 xl font-bolder">MoviesMight</span>
 
@@ -17,7 +18,7 @@ const Nav = () => {
         <span className="spacer flex-grow"></span>
 
         {
-          navbarTabs.map((tab , tabIndex) => <span className="tab ml-3 cursor-pointer hover:text-gray-400" key={`navTab-${tabIndex}`} >{tab}</span>)
+          navbarTabs.map((tab , tabIndex) => <span className="tab  cursor-pointer hover:text-gray-400" key={`navTab-${tabIndex}`} >{tab}</span>)
         }
 
         <span className="spacer flex-grow"></span>
@@ -38,15 +39,39 @@ const Nav = () => {
     )
 }
 
+const Movies = ({movies}) => {
+
+  return(
+    <div className="Movies">
+      {
+        movies.map((movie , movieIndex) => <span className="" key={`movieindex-${movieIndex}`}>
+            {/* <img className="" src="" alt=""/> */}
+            {/* <p>{title}</p> */}
+        </span>
+        )
+      }
+    </div>
+  )
+}
 const App= () =>{
+  const [movies, setMovies] = useState([])
+  const [fetching, setFetching] = useState(true)
 
+  useEffect(() => {
 
- return(
+    Axios('').then(response => setMovies(response.data))
+             .catch(console.log)
+             .finally(setFetching(false))
+
+  }, [])
+  return(
     <div className="App bg-gray-200 flex flex-col w-screen h-screen">
       <Nav />
      
       <div className="Screen">
-
+        {
+          fetching? <center>Loading...</center> : <Movies movies={movies} />
+        }
       </div>
     </div>
   ); 
