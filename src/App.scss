@@ -1,7 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Vampiro+One&display=swap');
 
 .App{
- 
+  background:url("./vectors/clown.jpg");
+  background-size: cover;
+  background-attachment: fixed;
+
   .Nav{
 
     .brand-logo{
@@ -11,5 +14,11 @@
     span.tab + span.tab{
       margin-left:1.2rem;
     }
+  }
+
+  .Movies{
+    grid-template-columns: repeat(auto-fill , minmax(100px,1fr));
+    grid-gap: 1rem;
+
   }
 }

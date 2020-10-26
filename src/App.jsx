@@ -1,11 +1,11 @@
 import React , {useState , useEffect} from 'react';
-import Axios from 'axios'
+import {getMovies} from './services/movie.service'
 
 import './App.scss';
 
 const Nav = () => {
-  const navbarTabs = "IMBD Rating,Latest,Popular,Most Downloaded".split(',')
-  const categories ="Category,All,Action,Sci-Fi,Comedy,Tragedy,Horror".split(',')
+  const navbarTabs = "Latest,IMBD Rating,Popular,Most Downloaded".split(',')
+  const categories ="Category,All,Action,Sci-Fi,Comedy,Mistery,Horror".split(',')
 
     return (
       
@@ -42,14 +42,14 @@ const Nav = () => {
 const Movies = ({movies}) => {
 
   return(
-    <div className="Movies">
-      {
+    <div className="Movies grid overflow-y-auto">
+      {/* {
         movies.map((movie , movieIndex) => <span className="" key={`movieindex-${movieIndex}`}>
-            {/* <img className="" src="" alt=""/> */}
-            {/* <p>{title}</p> */}
+            <img className="" src="" alt=""/>
+            <p>{title}</p>
         </span>
         )
-      }
+      } */}
     </div>
   )
 }
@@ -59,13 +59,13 @@ const App= () =>{
 
   useEffect(() => {
 
-    Axios('').then(response => setMovies(response.data))
+    getMovies().then(response => console.log(response.data))
              .catch(console.log)
-             .finally(setFetching(false))
+             
 
   }, [])
   return(
-    <div className="App bg-gray-200 flex flex-col w-screen h-screen">
+    <div className="App  flex flex-col w-screen h-screen">
       <Nav />
      
       <div className="Screen">
