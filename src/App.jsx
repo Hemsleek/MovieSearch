@@ -4,7 +4,8 @@ import {getMovies} from './services'
 import './App.scss';
 
 const Nav = () => {
-  const navbarTabs = "Latest,IMBD Rating,Popular,Most Downloaded".split(',')
+  const [selectedTab, setSelectedTab] = useState('Trending')
+  const navbarTabs = "Trending,Top Rated,Popular,Upcoming".split(',')
   const categories ="Category,All,Action,Sci-Fi,Comedy,Mistery,Horror".split(',')
 
     return (
@@ -18,7 +19,7 @@ const Nav = () => {
         <span className="spacer flex-grow"></span>
 
         {
-          navbarTabs.map((tab , tabIndex) => <span className="tab  cursor-pointer hover:text-gray-400" key={`navTab-${tabIndex}`} >{tab}</span>)
+          navbarTabs.map((tab , tabIndex) => <span className={`tab  cursor-pointer hover:text-gray-400 ${selectedTab===tab? 'active-tab' : ''}`} key={`navTab-${tabIndex}`} >{tab}</span>)
         }
 
         <span className="spacer flex-grow"></span>
@@ -40,26 +41,26 @@ const Nav = () => {
 }
 
 const Movies = ({movies}) => {
-
+  
   return(
     <div className="Movies grid overflow-y-auto">
-      {/* {
-        movies.map((movie , movieIndex) => <span className="" key={`movieindex-${movieIndex}`}>
+      {
+        movies.results.map((movie , movieIndex) => <span className="" key={`movieindex-${movieIndex}`}>
             <img className="" src="" alt=""/>
-            <p>{title}</p>
+            <p>{movie.title}</p>
         </span>
         )
-      } */}
+      }
     </div>
   )
 }
 const App= () =>{
-  const [movies, setMovies] = useState([])
+  const [movies, setMovies] = useState({})
   const [fetching, setFetching] = useState(true)
 
   useEffect(() => {
 
-    getMovies().then(response => console.log(response.data))
+    getMovies().then(response => {console.log(response.data); setMovies(response.data);setFetching(false)})
              .catch(console.log)
              
 
@@ -68,7 +69,7 @@ const App= () =>{
     <div className="App  flex flex-col w-screen h-screen">
       <Nav />
      
-      <div className="Screen">
+      <div className="Screen text-white">
         {
           fetching? <center>Loading...</center> : <Movies movies={movies} />
         }

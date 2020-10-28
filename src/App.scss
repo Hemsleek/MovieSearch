@@ -14,6 +14,12 @@
     span.tab + span.tab{
       margin-left:1.2rem;
     }
+
+    .tab.active-tab{
+      color:#cbd5e0;
+      font-weight:bolder;
+      font-size:1.25rem;
+    }
   }
 
   .Movies{
