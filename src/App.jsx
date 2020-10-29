@@ -46,14 +46,18 @@ const Movies = ({movies}) => {
 
   console.log(movies.results);
   return(
-    <div className="Movies grid overflow-y-auto text-white h-full px-3 py-4">
-      {
-        movies.results.map((movie , movieIndex) => <span className="shadow-xl rounded cursor-pointer" key={`movieindex-${movieIndex}`}>
-            <img className="" src={imageBaseUrl+movie.poster_path} alt={ `movie-${movieIndex}`}/>
-            <p className="text-center text-lg font-extrabold">{movie.title}</p>
-        </span>
-        )
-      }
+    <div className="wrapper overflow-y-auto flex-grow ">
+      <div className="Movies grid text-white  px-3 py-4">
+        {
+          movies.results.map((movie , movieIndex) => <span className="shadow-xl rounded cursor-pointer" key={`movieindex-${movieIndex}`}>
+              <img className="" src={imageBaseUrl+movie.poster_path} alt={ `movie-${movieIndex}`}/>
+              <p className="text-center text-lg font-extrabold text-blue-100">{movie.title}</p>
+          </span>
+          )
+        }
+
+      </div>
+      <span className="pages text-center p-2 mx-auto flex bg-white">1234</span>
     </div>
   )
 }
@@ -65,9 +69,9 @@ const App= () =>{
     const params='trending/movie/day'
     const query = `?api_key=${apiKey}`
   
-    getMovies(params, query).then(response => { setMovies(response.data);setFetching(false)})
-             .catch(console.log)
-             
+    getMovies(params, query).then(response => setMovies(response.data))
+                            .catch(console.log)
+                            .finally(() => setFetching(false))
 
   }, [])
   return(
@@ -75,9 +79,8 @@ const App= () =>{
       <Nav />
     
         {
-          fetching? <center>Loading...</center> : <Movies movies={movies} />
+          fetching? <center className="text-white mt-24 text-3xl font-extrabold">Loading...</center> : <Movies movies={movies} />
         }
-    
     </div>
   ); 
  }
