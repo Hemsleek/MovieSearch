@@ -5,5 +5,6 @@ import Axios from 'axios'
 const baseUrl = 'https://api.themoviedb.org/3/'
 
 
+
 // export const getMovies = () => Axios.get(baseUrl ,{ headers:header,params:param})
 export const getMovies = (params, query) => Axios(baseUrl+params+query)

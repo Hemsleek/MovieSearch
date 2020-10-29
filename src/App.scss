@@ -16,14 +16,15 @@
     }
 
     .tab.active-tab{
-      color:#cbd5e0;
+      // color:#cbd5e0;
+      color:white;
       font-weight:bolder;
       font-size:1.25rem;
     }
   }
 
   .Movies{
-    grid-template-columns: repeat(auto-fill , minmax(100px,1fr));
+    grid-template-columns: repeat(5, minmax(100px,1fr));
     grid-gap: 1rem;
 
   }

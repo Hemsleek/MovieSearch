@@ -20,7 +20,7 @@ const Nav = () => {
         <span className="spacer flex-grow"></span>
 
         {
-          navbarTabs.map((tab , tabIndex) => <span className={`tab  cursor-pointer hover:text-gray-400 ${selectedTab===tab? 'active-tab' : ''}`} key={`navTab-${tabIndex}`} >{tab}</span>)
+          navbarTabs.map((tab , tabIndex) => <span className={`tab  cursor-pointer text-gray-300 hover:text-white ${selectedTab===tab? 'active-tab' : ''}`} key={`navTab-${tabIndex}`} onClick={() => setSelectedTab(tab)}>{tab}</span>)
         }
 
         <span className="spacer flex-grow"></span>
@@ -42,13 +42,15 @@ const Nav = () => {
 }
 
 const Movies = ({movies}) => {
-  
+  const imageBaseUrl = 'https://image.tmdb.org/t/p/w500'
+
+  console.log(movies.results);
   return(
-    <div className="Movies grid overflow-y-auto">
+    <div className="Movies grid overflow-y-auto text-white h-full px-3 py-4">
       {
-        movies.results.map((movie , movieIndex) => <span className="" key={`movieindex-${movieIndex}`}>
-            <img className="" src="" alt=""/>
-            <p>{movie.title}</p>
+        movies.results.map((movie , movieIndex) => <span className="shadow-xl rounded cursor-pointer" key={`movieindex-${movieIndex}`}>
+            <img className="" src={imageBaseUrl+movie.poster_path} alt={ `movie-${movieIndex}`}/>
+            <p className="text-center text-lg font-extrabold">{movie.title}</p>
         </span>
         )
       }
@@ -62,8 +64,8 @@ const App= () =>{
   useEffect(() => {
     const params='trending/movie/day'
     const query = `?api_key=${apiKey}`
-    console.log(apiKey);
-    getMovies(params, query).then(response => {console.log(response.data); setMovies(response.data);setFetching(false)})
+  
+    getMovies(params, query).then(response => { setMovies(response.data);setFetching(false)})
              .catch(console.log)
              
 
@@ -71,12 +73,11 @@ const App= () =>{
   return(
     <div className="App  flex flex-col w-screen h-screen">
       <Nav />
-     
-      <div className="Screen text-white">
+    
         {
           fetching? <center>Loading...</center> : <Movies movies={movies} />
         }
-      </div>
+    
     </div>
   ); 
  }
