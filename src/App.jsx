@@ -1,5 +1,6 @@
 import React , {useState , useEffect} from 'react';
 import {getMovies} from './services'
+import {apiKey} from './utils/config' 
 
 import './App.scss';
 
@@ -59,8 +60,10 @@ const App= () =>{
   const [fetching, setFetching] = useState(true)
 
   useEffect(() => {
-
-    getMovies().then(response => {console.log(response.data); setMovies(response.data);setFetching(false)})
+    const params='trending/movie/day'
+    const query = `?api_key=${apiKey}`
+    console.log(apiKey);
+    getMovies(params, query).then(response => {console.log(response.data); setMovies(response.data);setFetching(false)})
              .catch(console.log)
              
 
