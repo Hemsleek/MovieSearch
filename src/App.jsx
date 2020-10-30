@@ -4,10 +4,11 @@ import {apiKey} from './utils/config'
 
 import './App.scss';
 
-const Nav = () => {
-  const [selectedTab, setSelectedTab] = useState('Trending')
+const Nav = ({selectedTab, handleSelectedTab}) => {
   const navbarTabs = "Trending,Top Rated,Popular,Upcoming".split(',')
   const categories ="Category,All,Action,Sci-Fi,Comedy,Mistery,Horror".split(',')
+
+  
 
     return (
       
@@ -20,7 +21,7 @@ const Nav = () => {
         <span className="spacer flex-grow"></span>
 
         {
-          navbarTabs.map((tab , tabIndex) => <span className={`tab  cursor-pointer text-gray-300 hover:text-white ${selectedTab===tab? 'active-tab' : ''}`} key={`navTab-${tabIndex}`} onClick={() => setSelectedTab(tab)}>{tab}</span>)
+          navbarTabs.map((tab , tabIndex) => <span onClick={() => handleSelectedTab(tab)} className={`tab  cursor-pointer text-gray-300 hover:text-white ${selectedTab===tab? 'active-tab' : ''}`} key={`navTab-${tabIndex}`} >{tab}</span>)
         }
 
         <span className="spacer flex-grow"></span>
@@ -44,39 +45,55 @@ const Nav = () => {
 const Movies = ({movies}) => {
   const imageBaseUrl = 'https://image.tmdb.org/t/p/w500'
 
-  console.log(movies.results);
   return(
-    <div className="wrapper overflow-y-auto flex-grow ">
+    <div className="wrapper overflow-y-auto mb-5 flex-grow ">
       <div className="Movies grid text-white  px-3 py-4">
         {
           movies.results.map((movie , movieIndex) => <span className="shadow-xl rounded cursor-pointer" key={`movieindex-${movieIndex}`}>
               <img className="" src={imageBaseUrl+movie.poster_path} alt={ `movie-${movieIndex}`}/>
-              <p className="text-center text-lg font-extrabold text-blue-100">{movie.title}</p>
+              <p className="text-center text-lg font-extrabold text-blue-100 hover:text-blue-400">{movie.title}</p>
           </span>
           )
         }
 
       </div>
-      <span className="pages text-center p-2 mx-auto flex bg-white">1234</span>
+      <span className="pages w-32 text-center flex p-2 mx-auto bg-white">pagination 1234</span>
     </div>
   )
 }
 const App= () =>{
   const [movies, setMovies] = useState({})
   const [fetching, setFetching] = useState(true)
+  const [selectedTab, setSelectedTab] = useState('Trending')
+  const [tabToShow, setTabToShow] = useState('trending')
 
+  const handleSelectedTab = (tab) =>{
+    
+    if(tab === 'Top Rated'){
+      const reformedTab = "top_rated"
+      setTabToShow(reformedTab) 
+      setSelectedTab(tab)
+
+      return null
+    }
+      setTabToShow(tab.toLowerCase())
+      setSelectedTab(tab)
+  } 
   useEffect(() => {
-    const params='trending/movie/day'
+    
+    let params=`movie/${tabToShow}`
     const query = `?api_key=${apiKey}`
-  
+
+    if(tabToShow==='trending') params=`${tabToShow}/all/day`
+    setFetching(true)
     getMovies(params, query).then(response => setMovies(response.data))
                             .catch(console.log)
                             .finally(() => setFetching(false))
 
-  }, [])
+  }, [tabToShow])
   return(
     <div className="App  flex flex-col w-screen h-screen">
-      <Nav />
+      <Nav selectedTab={selectedTab} handleSelectedTab={handleSelectedTab} />
     
         {
           fetching? <center className="text-white mt-24 text-3xl font-extrabold">Loading...</center> : <Movies movies={movies} />
