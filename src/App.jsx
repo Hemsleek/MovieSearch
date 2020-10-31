@@ -12,7 +12,7 @@ const Nav = ({selectedTab, handleSelectedTab}) => {
 
     return (
       
-      <nav className="Nav w-full flex items-center h-16 px-4 bg-gray-600 text-white shadow-md">
+      <nav className="Nav w-full flex items-center h-16 py-2 px-4 bg-gray-600 text-white shadow-md">
 
         <span className="brand-logo cursor-pointer text-2 xl font-bolder">MoviesMight</span>
 
@@ -61,36 +61,37 @@ const Movies = ({movies}) => {
     </div>
   )
 }
+
 const App= () =>{
   const [movies, setMovies] = useState({})
   const [fetching, setFetching] = useState(true)
   const [selectedTab, setSelectedTab] = useState('Trending')
-  const [tabToShow, setTabToShow] = useState('trending')
+  const [movieToShow, setMovieToShow] = useState('trending')
 
   const handleSelectedTab = (tab) =>{
     
     if(tab === 'Top Rated'){
       const reformedTab = "top_rated"
-      setTabToShow(reformedTab) 
+      setMovieToShow(reformedTab) 
       setSelectedTab(tab)
 
       return null
     }
-      setTabToShow(tab.toLowerCase())
+      setMovieToShow(tab.toLowerCase())
       setSelectedTab(tab)
   } 
   useEffect(() => {
     
-    let params=`movie/${tabToShow}`
+    let params=`movie/${movieToShow}`
     const query = `?api_key=${apiKey}`
 
-    if(tabToShow==='trending') params=`${tabToShow}/all/day`
+    if(movieToShow==='trending') params=`${movieToShow}/all/day`
     setFetching(true)
     getMovies(params, query).then(response => setMovies(response.data))
                             .catch(console.log)
                             .finally(() => setFetching(false))
 
-  }, [tabToShow])
+  }, [movieToShow])
   return(
     <div className="App  flex flex-col w-screen h-screen">
       <Nav selectedTab={selectedTab} handleSelectedTab={handleSelectedTab} />
