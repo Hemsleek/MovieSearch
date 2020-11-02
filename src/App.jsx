@@ -16,7 +16,7 @@ const Nav = ({selectedTab, handleSelectedTab}) => {
 
         <span className="brand-logo cursor-pointer text-2 xl font-bolder">MoviesMight</span>
 
-        <input type="search" className="px-2 w-48 py-1 ml-3 rounded outline-none text-black text-opacity-75" />
+        <input type="search" className="px-2 w-48 py-1 ml-3 rounded outline-none text-black text-opacity-75" placeholder="Search Movies"/>
 
         <span className="spacer flex-grow"></span>
 
@@ -70,18 +70,16 @@ const App= () =>{
 
   const handleSelectedTab = (tab) =>{
     
-    if(tab === 'Top Rated'){
-      const reformedTab = "top_rated"
-      setMovieToShow(reformedTab) 
-      setSelectedTab(tab)
+    setSelectedTab(tab)
 
-      return null
-    }
-      setMovieToShow(tab.toLowerCase())
-      setSelectedTab(tab)
-  } 
-  useEffect(() => {
+    if(tab === 'Top Rated')tab = "top_rated"
     
+    setMovieToShow(tab.toLowerCase())
+     
+  } 
+
+  useEffect(() => {
+    if(!movieToShow) return null
     let params=`movie/${movieToShow}`
     const query = `?api_key=${apiKey}`
 
