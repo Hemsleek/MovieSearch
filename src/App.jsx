@@ -8,8 +8,6 @@ const Nav = ({selectedTab, handleSelectedTab}) => {
   const navbarTabs = "Trending,Top Rated,Popular,Upcoming".split(',')
   const categories ="Category,All,Action,Sci-Fi,Comedy,Mistery,Horror".split(',')
 
-  
-
     return (
       
       <nav className="Nav w-full flex items-center h-16 py-2 px-4 bg-gray-600 text-white shadow-md">
@@ -44,16 +42,16 @@ const Nav = ({selectedTab, handleSelectedTab}) => {
 
 const Movies = ({movies}) => {
   const imageBaseUrl = 'https://image.tmdb.org/t/p/w500'
- console.log(movies)
+
   return(
-    <div className="wrapper overflow-y-auto mb-5 flex-grow ">
+    <div className="wrapper overflow-y-auto mb-1 flex-grow ">
       <div className="Movies grid text-white  px-3 py-4">
 
         {
-          movies.results.map((movie , movieIndex) => <span className="shadow-xl rounded cursor-pointer" key={`movieindex-${movieIndex}`}>
-              <img className="" src={imageBaseUrl+movie.poster_path} alt={ `movie-${movieIndex}`} />
+          movies.results.map((movie , movieIndex) => <div className="shadow-xl rounded-lg cursor-pointer" key={`movieindex-${movieIndex}`}>
+              <img className="rounded-md" src={imageBaseUrl+movie.poster_path} alt={ `movie-${movieIndex}`} />
               <p className="text-center text-lg font-extrabold text-blue-100 hover:text-blue-400">{movie.title}</p>
-          </span>
+          </div>
           )
         }
 
@@ -88,7 +86,7 @@ const App= () =>{
     setFetching(true)
     getMovies(params, query).then(response => setMovies(response.data))
                             .catch(console.log)
-                            .finally(() => setFetching(false))
+                            .finally(() => setFetching(false)) 
 
   }, [movieToShow])
   
@@ -98,10 +96,10 @@ const App= () =>{
         
 
         {
-          fetching? <center className="text-white mt-24 text-3xl font-extrabold">Loading...</center> : <Movies movies={movies} />
+          fetching? <center className="flex-grow text-white mt-24 text-3xl font-extrabold">Loading...</center> : <Movies movies={movies} />
         }
 
-        <footer className="w-full flex items-center h-16 py-2 px-4 bg-gray-600 text-white shadow-md">
+        <footer className="w-full flex items-center px-4 bg-gray-600 text-white shadow-md">
             &copy;
             <span className="brand-logo cursor-pointer text-2 xl font-bolder ml-1">MoviesMight</span>
         </footer>

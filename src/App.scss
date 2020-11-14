@@ -22,15 +22,19 @@
       font-size:1.25rem;
     }
   }
-
+  .wrapper::-webkit-scrollbar{
+    width:0;
+  }
   .Movies{
     grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
     grid-gap: 1rem;
 
   }
   footer{
+    height:9rem;
     .brand-logo{
       font-family: 'Vampiro One', cursive;
+
     }
   }
 }
