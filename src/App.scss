@@ -4,12 +4,13 @@
   background:url("./vectors/clown.jpg");
   background-size: cover;
   background-attachment: fixed;
-
+  
+  .brand-logo{
+    font-family: 'Vampiro One', cursive;
+  }
   .Nav{
-
-    .brand-logo{
-      font-family: 'Vampiro One', cursive;
-    }
+    min-height:3.2rem;
+    
 
     span.tab + span.tab{
       margin-left:1.2rem;
@@ -31,10 +32,7 @@
 
   }
   footer{
-    height:9rem;
-    .brand-logo{
-      font-family: 'Vampiro One', cursive;
+    min-height:2.5rem;
 
-    }
   }
 }

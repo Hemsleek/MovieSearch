@@ -10,7 +10,7 @@ const Nav = ({selectedTab, handleSelectedTab}) => {
 
     return (
       
-      <nav className="Nav w-full flex items-center h-16 py-2 px-4 bg-gray-600 text-white shadow-md">
+      <nav className="Nav w-full flex items-center px-4 bg-gray-600 text-white shadow-md">
 
         <span className="brand-logo cursor-pointer text-2 xl font-bolder">MoviesMight</span>
 
@@ -44,7 +44,7 @@ const Movies = ({movies}) => {
   const imageBaseUrl = 'https://image.tmdb.org/t/p/w500'
 
   return(
-    <div className="wrapper overflow-y-auto mb-1 flex-grow ">
+    <div className="wrapper overflow-y-auto  flex-grow ">
       <div className="Movies grid text-white  px-3 py-4">
 
         {
@@ -61,42 +61,55 @@ const Movies = ({movies}) => {
   )
 }
 
+const HomePage = () =>{
+
+  return(
+    <main className="flex-grow flex flex-col items-center justify-center">
+      <div className="brand-logo text-5xl text-center text-indigo-900">Welcome To The <br />MoviesMight</div>
+      <form>
+        <input type="search" className="px-3 py-2 border-none shadow-md rounded-lg  focus:outline-none " placeholder="Search Movies"/>
+      </form>
+    </main>
+  )
+}
+
+
 const App= () =>{
   const [movies, setMovies] = useState({})
-  const [fetching, setFetching] = useState(true)
+  const [fetching, setFetching] = useState(false)
+  const [fetched, setFetched] = useState(false)
   const [selectedTab, setSelectedTab] = useState('Trending')
-  const [movieToShow, setMovieToShow] = useState('trending')
+  
 
   const handleSelectedTab = (tab) =>{
     
     setSelectedTab(tab)
 
-    if(tab === 'Top Rated')tab = "top_rated"
-    
-    setMovieToShow(tab.toLowerCase())
      
   } 
 
   useEffect(() => {
-   
+
+    let movieToShow;
+    movieToShow= selectedTab.toLowerCase()
+    if(selectedTab==='Top Rated') movieToShow= 'top_rated'
     let params=`movie/${movieToShow}`
     const query = `?api_key=${apiKey}`
 
     if(movieToShow==='trending') params=`${movieToShow}/all/day`
-    setFetching(true)
+    setFetched(false)
     getMovies(params, query).then(response => setMovies(response.data))
                             .catch(console.log)
-                            .finally(() => setFetching(false)) 
+                            .finally(() => setFetched(true)) 
 
-  }, [movieToShow])
+  }, [selectedTab])
   
   return(
     <div className="App  flex flex-col w-screen h-screen">
       <Nav selectedTab={selectedTab} handleSelectedTab={handleSelectedTab} />
         
-
-        {
-          fetching? <center className="flex-grow text-white mt-24 text-3xl font-extrabold">Loading...</center> : <Movies movies={movies} />
+        {fetching===false? <HomePage /> :
+          (fetched? <Movies movies={movies} /> : <center className="flex-grow text-white mt-24 text-3xl font-extrabold">Loading...</center>)
         }
 
         <footer className="w-full flex items-center px-4 bg-gray-600 text-white shadow-md">
