@@ -1,10 +1,10 @@
-import React , {useState , useEffect} from 'react';
+import React , {useState} from 'react';
 import {getMovies} from './services'
 import {apiKey} from './utils/config' 
 
 import './App.scss';
 
-const Nav = ({selectedTab, handleSelectedTab}) => {
+const Nav = ({selectedTab,handleHomeClick, handleSelectedTab}) => {
   const navbarTabs = "Trending,Top Rated,Popular,Upcoming".split(',')
   const categories ="Category,All,Action,Sci-Fi,Comedy,Mistery,Horror".split(',')
 
@@ -12,7 +12,7 @@ const Nav = ({selectedTab, handleSelectedTab}) => {
       
       <nav className="Nav w-full flex items-center px-4 bg-gray-600 text-white shadow-md">
 
-        <span className="brand-logo cursor-pointer text-2 xl font-bolder">MoviesMight</span>
+        <span onClick={() => handleHomeClick()} className="brand-logo cursor-pointer text-2 xl font-bolder">MoviesMight</span>
 
         <input type="search" className="px-2 w-48 py-1 ml-3 rounded outline-none text-black text-opacity-75" placeholder="Search Movies"/>
 
@@ -42,7 +42,7 @@ const Nav = ({selectedTab, handleSelectedTab}) => {
 
 const Movies = ({movies}) => {
   const imageBaseUrl = 'https://image.tmdb.org/t/p/w500'
-
+  console.log(movies)
   return(
     <div className="wrapper overflow-y-auto  flex-grow ">
       <div className="Movies grid text-white  px-3 py-4">
@@ -76,37 +76,43 @@ const HomePage = () =>{
 
 const App= () =>{
   const [movies, setMovies] = useState({})
+  const [movieToShow, setMovieToShow] = useState("sds")
   const [fetching, setFetching] = useState(false)
   const [fetched, setFetched] = useState(false)
-  const [selectedTab, setSelectedTab] = useState('Trending')
+  const [selectedTab, setSelectedTab] = useState('')
+
   
 
   const handleSelectedTab = (tab) =>{
-    
+    console.log({movieToShow})
+
     setSelectedTab(tab)
-
-     
-  } 
-
-  useEffect(() => {
-
-    let movieToShow;
-    movieToShow= selectedTab.toLowerCase()
-    if(selectedTab==='Top Rated') movieToShow= 'top_rated'
+    if(!fetching)setFetching(true)
+    setMovieToShow(selectedTab.toLowerCase())
+    console.log({movieToShow})
+    if(selectedTab==='Top Rated') setMovieToShow('top_rated')
+    console.log({movieToShow})
     let params=`movie/${movieToShow}`
     const query = `?api_key=${apiKey}`
 
     if(movieToShow==='trending') params=`${movieToShow}/all/day`
-    setFetched(false)
+    if(fetched)setFetched(false)
     getMovies(params, query).then(response => setMovies(response.data))
                             .catch(console.log)
                             .finally(() => setFetched(true)) 
 
-  }, [selectedTab])
-  
+     
+  } 
+
+  const handleHomeClick = () =>{
+    if(fetching)setFetching(false)
+    if(selectedTab)setSelectedTab(false)
+
+  }
+
   return(
     <div className="App  flex flex-col w-screen h-screen">
-      <Nav selectedTab={selectedTab} handleSelectedTab={handleSelectedTab} />
+      <Nav selectedTab={selectedTab} handleSelectedTab={handleSelectedTab} handleHomeClick={handleHomeClick} />
         
         {fetching===false? <HomePage /> :
           (fetched? <Movies movies={movies} /> : <center className="flex-grow text-white mt-24 text-3xl font-extrabold">Loading...</center>)
