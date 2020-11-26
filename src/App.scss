@@ -1,38 +1,41 @@
-@import url('https://fonts.googleapis.com/css2?family=Vampiro+One&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Vampiro+One&display=swap");
 
-.App{
-  background:url("./vectors/clown.jpg");
+.App {
+  background: url("./vectors/allenqueen.jpg");
   background-size: cover;
   background-attachment: fixed;
-  
-  .brand-logo{
-    font-family: 'Vampiro One', cursive;
-  }
-  .Nav{
-    min-height:3.2rem;
-    
 
-    span.tab + span.tab{
-      margin-left:1.2rem;
+  .brand-logo {
+    font-family: "Vampiro One", cursive;
+  }
+  .Nav {
+    min-height: 3.2rem;
+
+    span.tab + span.tab {
+      margin-left: 1.2rem;
     }
 
-    .tab.active-tab{
+    .tab.active-tab {
       // color:#cbd5e0;
-      color:white;
-      font-weight:bolder;
-      font-size:1.25rem;
+      color: white;
+      font-weight: bolder;
+      font-size: 1.25rem;
     }
   }
-  .wrapper::-webkit-scrollbar{
-    width:0;
+  .wrapper::-webkit-scrollbar {
+    width: 0;
   }
-  .Movies{
-    grid-template-columns: repeat(auto-fill, minmax(250px,1fr));
+  .Movies {
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     grid-gap: 1rem;
-
   }
-  footer{
-    min-height:2.5rem;
-
+  .spinner {
+    border-left: 2px solid indigo;
+    animation: spin 2s infinite linear;
+  }
+  @keyframes spin {
+  }
+  footer {
+    min-height: 2.5rem;
   }
 }

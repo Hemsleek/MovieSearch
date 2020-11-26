@@ -42,7 +42,7 @@ const Nav = ({selectedTab,handleHomeClick, handleSelectedTab}) => {
 
 const Movies = ({movies}) => {
   const imageBaseUrl = 'https://image.tmdb.org/t/p/w500'
-  console.log(movies)
+  
   return(
     <div className="wrapper overflow-y-auto  flex-grow ">
       <div className="Movies grid text-white  px-3 py-4">
@@ -87,8 +87,9 @@ const App= () =>{
     console.log({movieToShow})
 
     setSelectedTab(tab)
+    console.log({selectedTab})
     if(!fetching)setFetching(true)
-    setMovieToShow(selectedTab.toLowerCase())
+    setMovieToShow('abc')
     console.log({movieToShow})
     if(selectedTab==='Top Rated') setMovieToShow('top_rated')
     console.log({movieToShow})
@@ -100,7 +101,7 @@ const App= () =>{
     getMovies(params, query).then(response => setMovies(response.data))
                             .catch(console.log)
                             .finally(() => setFetched(true)) 
-
+   
      
   } 
 
@@ -115,12 +116,13 @@ const App= () =>{
       <Nav selectedTab={selectedTab} handleSelectedTab={handleSelectedTab} handleHomeClick={handleHomeClick} />
         
         {fetching===false? <HomePage /> :
-          (fetched? <Movies movies={movies} /> : <center className="flex-grow text-white mt-24 text-3xl font-extrabold">Loading...</center>)
+          (fetched? <Movies movies={movies} /> : <center className="flex-grow text-white mt-24 text-3xl font-extrabold">Loading...<span className="spinner flex w-6 h-6 rounded-full"></span></center>)
         }
 
-        <footer className="w-full flex items-center px-4 bg-gray-600 text-white shadow-md">
-            &copy;
-            <span className="brand-logo cursor-pointer text-2 xl font-bolder ml-1">MoviesMight</span>
+        <footer className="w-full flex items-center px-4 justify-between bg-gray-600 text-white shadow-md">
+            
+           <img src="./tmbd-footer.svg" className="w-32" alt="tmbd" />
+            <span className="brand-logo cursor-pointer text-2 xl font-bolder ml-1">  &copy; MoviesMight</span>
         </footer>
 
     </div>
