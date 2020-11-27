@@ -77,7 +77,7 @@ const HomePage = () =>{
 const App= () =>{
   const [movies, setMovies] = useState({})
   const [movieToShow, setMovieToShow] = useState("sds")
-  const [fetching, setFetching] = useState(false)
+  const [fetching, setFetching] = useState(true)
   const [fetched, setFetched] = useState(false)
   const [selectedTab, setSelectedTab] = useState('')
 
@@ -116,7 +116,11 @@ const App= () =>{
       <Nav selectedTab={selectedTab} handleSelectedTab={handleSelectedTab} handleHomeClick={handleHomeClick} />
         
         {fetching===false? <HomePage /> :
-          (fetched? <Movies movies={movies} /> : <center className="flex-grow text-white mt-24 text-3xl font-extrabold">Loading...<span className="spinner flex w-6 h-6 rounded-full"></span></center>)
+          (fetched? <Movies movies={movies} /> : 
+            <center className="flex-grow text-white mt-24 text-3xl font-extrabold">
+              <span className="loader text-indigo-500">Loading</span>
+              <span className="spinner  mx-auto flex w-8 h-8 rounded-full mt-2" />
+            </center>)
         }
 
         <footer className="w-full flex items-center px-4 justify-between bg-gray-600 text-white shadow-md">
