@@ -3,6 +3,7 @@ import {getMovies} from './services'
 import {apiKey} from './utils/config' 
 
 import './App.scss';
+import Loader from './components/Loader';
 
 const Nav = ({selectedTab,handleHomeClick, handleSelectedTab}) => {
   const navbarTabs = "Trending,Top Rated,Popular,Upcoming".split(',')
@@ -116,11 +117,7 @@ const App= () =>{
       <Nav selectedTab={selectedTab} handleSelectedTab={handleSelectedTab} handleHomeClick={handleHomeClick} />
         
         {fetching===false? <HomePage /> :
-          (fetched? <Movies movies={movies} /> : 
-            <center className="flex-grow text-white mt-24 text-3xl font-extrabold">
-              <span className="pulseLoader text-indigo-500">Loading</span>
-              <span className="spinner  mx-auto flex w-8 h-8 rounded-full mt-2" />
-            </center>)
+          (fetched? <Movies movies={movies} /> : <Loader />)
         }
 
         <footer className="w-full flex items-center px-4 justify-between bg-gray-600 text-white shadow-md">
