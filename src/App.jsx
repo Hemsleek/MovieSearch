@@ -5,7 +5,7 @@ import {apiKey} from './utils/config'
 import './App.scss';
 import Loader from './components/Loader';
 
-const Nav = ({selectedTab,handleHomeClick, handleSelectedTab}) => {
+const Nav = ({selectedTab,handleHomeClick, handleSelectedTab, fetching}) => {
   const navbarTabs = "Trending,Top Rated,Popular,Upcoming".split(',')
   const categories ="Category,All,Action,Sci-Fi,Comedy,Mistery,Horror".split(',')
 
@@ -15,7 +15,9 @@ const Nav = ({selectedTab,handleHomeClick, handleSelectedTab}) => {
 
         <span onClick={() => handleHomeClick()} className="brand-logo cursor-pointer text-2 xl font-bolder">MoviesMight</span>
 
-        <input type="search" className="px-2 w-48 py-1 ml-3 rounded outline-none text-black text-opacity-75" placeholder="Search Movies"/>
+       { fetching &&
+       <input type="search" className="px-2 w-48 py-1 ml-3 rounded outline-none text-black text-opacity-75" placeholder="Search Movies"/>
+       }
 
         <span className="spacer flex-grow"></span>
 
@@ -114,7 +116,7 @@ const App= () =>{
 
   return(
     <div className="App  flex flex-col w-screen h-screen">
-      <Nav selectedTab={selectedTab} handleSelectedTab={handleSelectedTab} handleHomeClick={handleHomeClick} />
+      <Nav fetching = {fetching} selectedTab={selectedTab} handleSelectedTab={handleSelectedTab} handleHomeClick={handleHomeClick} />
         
         {fetching===false? <HomePage /> :
           (fetched? <Movies movies={movies} /> : <Loader />)
